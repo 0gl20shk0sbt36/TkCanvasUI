@@ -1,4 +1,8 @@
 from itertools import combinations
+try:
+    from .BaseShape import BaseShape
+except ImportError:
+    from BaseShape import BaseShape
 
 
 class Vector:
@@ -181,7 +185,7 @@ class Lines:
         raise AttributeError('can\'t set Lines')
 
 
-class Polygon:
+class Polygon(BaseShape):
     """多边形碰撞类"""
 
     points: List = Points()
@@ -194,6 +198,7 @@ class Polygon:
         :param point: 多边形的坐标
         :param opposite: 判断点是否在多边形内部时是否取反
         """
+        super().__init__(point)
         self.points = points
         self.point = point
         self.opposite = opposite

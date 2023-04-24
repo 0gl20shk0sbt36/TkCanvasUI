@@ -20,7 +20,7 @@ class BaseShape:
         """获取关键数据"""
         pass
 
-    def collision(self, point: tuple[float, float]) -> bool:  # type: ignore
+    def collision(self, point: tuple[float, float]) -> bool:
         """检测是否碰撞
 
         :param point: 点坐标

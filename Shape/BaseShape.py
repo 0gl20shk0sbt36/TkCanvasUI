@@ -41,7 +41,7 @@ class BaseShape:
         :param point: 点坐标
         :return: 返回一个布尔值，表示是否碰撞
         """
-        pass
+        return self.collision_fun(self.get_key(), point)
 
     def get_mbr(self) -> tuple[tuple[float, float], tuple[float, float]]:
         """获取最小外接矩形

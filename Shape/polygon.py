@@ -3,6 +3,7 @@ try:
     from .BaseShape import BaseShape
 except ImportError:
     from BaseShape import BaseShape
+from .ShapeChangeableBox import ShapeChangeableBox
 
 
 class Vector:
@@ -185,6 +186,20 @@ class Lines:
         raise AttributeError('can\'t set Lines')
 
 
+def collision_fun(key, point):
+    """ 判断点是否在多边形内部
+
+    :param point: 点坐标
+    :return: 点是否在多边形内部
+    """
+    self_point, mbr, opposite, lines = key
+    x = point[0] - self_point[0]
+    y = point[1] - self_point[1]
+    return ((mbr[0] < x < mbr[2]) ^ opposite and
+            (mbr[1] < y < mbr[3]) ^ opposite and
+            in_polygon((x, y), lines) ^ opposite)
+
+
 class Polygon(BaseShape):
     """多边形碰撞类"""
 
@@ -192,31 +207,28 @@ class Polygon(BaseShape):
     lines: List = Lines()
     mbr = None
 
-    def __init__(self, *points, point, opposite=False):
+    def __init__(self, *points, point=(0, 0), centre=(0, 0), opposite=False):
         """ 多边形碰撞类
         :param points: 其他点的坐标
         :param point: 多边形的坐标
         :param opposite: 判断点是否在多边形内部时是否取反
         """
-        super().__init__(point)
+        super().__init__(point, centre, opposite)
         self.points = points
         self.point = point
         self.opposite = opposite
+        self.collision_fun = collision_fun
 
     def __str__(self):
         return f"Polygon({self.points})"
 
-    def collider(self, point):
-        """ 判断点是否在多边形内部
-
-        :param point: 点坐标
-        :return: 点是否在多边形内部
-        """
-        x = point[0] - self.point[0]
-        y = point[1] - self.point[1]
-        return ((self.mbr[0] < x < self.mbr[2]) ^ self.opposite and
-                (self.mbr[1] < y < self.mbr[3]) ^ self.opposite and
-                in_polygon((x, y), self.lines) ^ self.opposite)
+    def get_key(self):
+        return self.point, self.mbr, self.opposite, self.lines
 
     def move(self, x, y):
         self.point = (x, y)
+
+
+def get_polygon(*points, point=(0, 0), centre=(0, 0), opposite=False, shape_box='changeable'):
+    p = Polygon(*locals())
+

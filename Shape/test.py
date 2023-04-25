@@ -1,4 +1,4 @@
-from ShapeBox import ShapeBox
+from ShapeImmutableBox import ShapeBox
 
 
 ShapeBox()

@@ -2,15 +2,30 @@
 
 
 class BaseShape:
-    """形状检测体的基类"""
+    """形状检测体的基类
+    子类必须定义自己的collision_fun变量
+    :param self.name: 名称
+    :param self.contrary: 一个布尔值，用于确定是否将结果取反。如果它被设置为True，判定结果将被取反，默认值到False(可选)
+    :param self.point: 表示坐标的元组
+    :param self.centre: 中心点坐标，它是一个包含中心点的x和y坐标的元组
+    :param self.collision_fun: 碰撞函数
+    """
+
+    def __new__(cls, *args, **kwargs):
+        if cls is BaseShape:
+            raise ValueError("BaseShape can't be instantiated")
+        shape = super().__new__(cls)
+        shape.name = cls.__name__
+        return shape
 
     def __init__(self, point=(0, 0), centre=(0, 0), contrary=False):
         """形状检测体的基类
 
         :param point: 表示坐标的元组
         :param centre: 中心点坐标，它是一个包含中心点的x和y坐标的元组
-        :param contrary: 一个布尔值，用于确定是否将结果取反。如果它被设置为True，旋转将在相反的方向，默认值到False(可选)
+        :param contrary: 一个布尔值，用于确定是否将结果取反。如果它被设置为True，判定结果将被取反，默认值到False(可选)
         """
+        self.name = None
         self.contrary = contrary
         self.point = point
         self.centre = centre
@@ -28,7 +43,7 @@ class BaseShape:
         """
         pass
 
-    def get_mbr(self) -> tuple[tuple[float, float], tuple[float, float]]:  # type: ignore
+    def get_mbr(self) -> tuple[tuple[float, float], tuple[float, float]]:
         """获取最小外接矩形
 
         :return: 返回一个元组，包含最小外接矩形的左上角和右下角的坐标

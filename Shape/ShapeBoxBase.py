@@ -6,8 +6,8 @@ except ImportError:
 
 class ShapeBoxBase(BaseShape):
 
-    def __init__(self, shape, point=(0, 0), centre=(0, 0), contrary=False):
-        super().__init__(point, centre, contrary)
+    def __init__(self, shape, point=(0, 0), contrary=False):
+        super().__init__(point, contrary)
         if isinstance(shape, list):
             self.shape = shape
         elif issubclass(type(shape), BaseShape):

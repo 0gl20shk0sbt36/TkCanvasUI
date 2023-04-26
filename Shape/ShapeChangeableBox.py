@@ -17,8 +17,8 @@ def collision_fun(cls, point):
 
 class ShapeChangeableBox(ShapeBoxBase):
 
-    def __init__(self, shape, point=(0, 0), centre=(0, 0), contrary=False):
-        super().__init__(shape, point, centre, contrary)
+    def __init__(self, shape, point=(0, 0), contrary=False):
+        super().__init__(shape, point, contrary)
         self.collision_fun = collision_fun
 
     def iadd(self, mod, shape):

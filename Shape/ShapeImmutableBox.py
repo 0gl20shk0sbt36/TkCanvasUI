@@ -27,15 +27,14 @@ def collision_fun(key, point):
 class ShapeImmutableBox(ShapeBoxBase):
     """形状检测体的组合类"""
 
-    def __init__(self, shape, point=(0, 0), centre=(0, 0), contrary=False):
+    def __init__(self, shape, point=(0, 0), contrary=False):
         """形状检测体的组合类
 
         :param shape: 一个形状检测体或形状检测体列表
         :param point: 坐标,它是一个包含x和y坐标的元组
-        :param centre: 中心点坐标，它是一个包含中心点的x和y坐标的元组
         :param contrary: 一个布尔值，用于确定是否将结果取反。如果它被设置为True，返回值将取反，默认值到False(可选)
         """
-        super().__init__(shape, point, centre, contrary)
+        super().__init__(shape, point, contrary)
         self.collision_fun = collision_fun
 
     def add(self, mod, shape):

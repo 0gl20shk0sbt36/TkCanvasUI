@@ -72,4 +72,4 @@ class ShapeBoxBase(BaseShape):
     # endregion
 
     def copy(self):
-        return ShapeBoxBase(self.shape, self.point, self.centre, self.contrary)
+        return ShapeBoxBase(self.shape, self.point, self.contrary)
